@@ -1,0 +1,66 @@
+<div class="grid-container">
+    <div style="text-align: center; margin: 20px 0">
+        <h1 class="mat-h1">HISTORIAL DE FACTURAS</h1>
+    </div>
+
+    <!-- Filtro de búsqueda -->
+    <div style="margin: 20px; display: flex; gap: 50px; align-items: center" *ngIf="currentUser?.role == 'ENCARGADO'">
+        <mat-form-field appearance="fill">
+            <mat-label>Seleccione el cliente</mat-label>
+            <mat-select [(ngModel)]="selectedCliente" (selectionChange)="filterFacturas()">
+                <mat-option *ngFor="let cliente of clientes" [value]="cliente.id">{{
+                    cliente.nombre
+                    }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Seleccione la fecha</mat-label>
+            <input matInput [matDatepicker]="picker" readonly [(ngModel)]="selectedFecha"
+                (dateChange)="filterFacturas()" />
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <button mat-raised-button color="warn" (click)="limpiar()">
+            Limpiar
+            <mat-icon>clear</mat-icon>
+        </button>
+    </div>
+
+    <mat-grid-list [cols]="4" rowHeight="1:0.6" gutterSize="10px">
+        <mat-grid-tile *ngFor="let item of filteredDatos">
+            <mat-card class="dashboard-card">
+                <mat-card-content style="text-align: left; gap: 15px" class="dashboard-card-content">
+
+                    @if(item.estado){
+                    <h2 style="text-align: center; color: #1976d2;">
+                        No. Factura #{{ item.id }}
+                    </h2>
+                    } @else {
+                    <h2 style="text-align: center; color: rgb(134, 36, 36);">
+                        No. Proforma #{{ item.id }}
+                    </h2>
+                    }
+
+                    <p><strong>Fecha:</strong> {{ item.fecha | date : "dd/MM/yyyy" }}</p>
+                    <p><strong>Cliente:</strong> {{ item.cliente.nombre }}</p>
+                    <h3>{{ item.sucursal.nombre }}</h3>
+                </mat-card-content>
+                <mat-card-actions class="card-buttons">
+                    <button mat-flat-button color="accent" matTooltip="Detalle factura" aria-label="Detalle factura"
+                        color="primary" (click)="detalle(item.id)">
+                        <mat-icon class="mat-18">info</mat-icon>
+                        Detalles
+                    </button>
+                </mat-card-actions>
+            </mat-card>
+        </mat-grid-tile>
+    </mat-grid-list>
+</div>
+<ng-template #accesoDenegado>
+    <div style="text-align: center; margin: 20px 0">
+        <h1 class="mat-h1">Acceso Denegado</h1>
+        <p>No tienes permisos para ver esta sección.</p>
+    </div>
+</ng-template>

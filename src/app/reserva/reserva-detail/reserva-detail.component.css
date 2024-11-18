@@ -1,0 +1,79 @@
+.reserva-container {
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    font-family: Arial, sans-serif;
+}
+
+.reserva-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.reserva-header h1 {
+    color: #1976d2;
+    /* Color primario */
+    margin-bottom: 10px;
+}
+
+.empresa-info {
+    text-align: left;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.reserva-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.reserva-info p {
+    margin: 2px 0;
+}
+
+.cliente-info p {
+    font-size: 14px;
+}
+
+.reserva-detalles p {
+    font-size: 14px;
+    text-align: right;
+}
+
+.reserva-body {
+    margin-top: 20px;
+}
+
+.mat-table {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.mat-header-cell {
+    background-color: #e3f2fd;
+    /* Color de fondo para las celdas de encabezado */
+    color: #1976d2;
+    /* Color del texto del encabezado */
+    font-weight: bold;
+}
+
+.mat-cell,
+.mat-header-cell {
+    text-align: left;
+    padding: 8px;
+}
+
+.reserva-footer {
+    text-align: right;
+    margin-top: 20px;
+}
+
+.totales p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.totales p strong {
+    color: #1976d2;
+}

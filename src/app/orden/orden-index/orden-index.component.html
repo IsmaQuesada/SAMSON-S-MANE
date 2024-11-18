@@ -1,0 +1,180 @@
+<mat-card class="box">
+    <mat-card-title>Realizar Factura</mat-card-title>
+    <mat-card-content class="invoice-info">
+        <div>
+            <strong>Fecha de Facturación:</strong> {{ fecha | date : "dd/MM/yyyy" }}
+            <br />
+            <strong>Sucursal:</strong> {{ sucursal?.nombre || "No disponible" }}
+            <br />
+            <strong>Encargado:</strong> {{ currentUser?.nombre || "No disponible" }}
+        </div>
+        <div *ngIf="cliente">
+            <strong>Cliente:</strong> {{ cliente?.nombre || "No disponible" }} <br />
+            <strong>E-mail:</strong> {{ cliente?.email || "No disponible" }} <br />
+        </div>
+    </mat-card-content>
+</mat-card>
+
+<mat-card class="box">
+    <div class="section-header">
+        <h2>Seleccionar Cliente</h2>
+        <p>Cliente que solicita la compra</p>
+        <mat-form-field class="full-width">
+            <mat-select placeholder="Seleccione el cliente" [(ngModel)]="selectedClienteId"
+                (selectionChange)="obtenerCliente($event.value)">
+                <mat-option *ngFor="let item of clientesList" [value]="item.id">
+                    {{ item.nombre }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <mat-card-content *ngIf="dataSource.data.length > 0">
+        <h2>Productos</h2>
+        <p>Productos que se han agregado a la compra</p>
+        <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <ng-container matColumnDef="producto">
+                <mat-header-cell *matHeaderCellDef> Producto </mat-header-cell>
+                <mat-cell *matCellDef="let element">{{
+                    element.compra?.nombre || "No disponible"
+                    }}</mat-cell>
+                <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="precio">
+                <mat-header-cell *matHeaderCellDef> Precio </mat-header-cell>
+                <mat-cell *matCellDef="let element">{{
+                    element.precio | currency
+                    }}</mat-cell>
+                <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="cantidad">
+                <mat-header-cell *matHeaderCellDef> Cantidad </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <mat-form-field appearance="fill">
+                        <input matInput id="cantidad" [(ngModel)]="element.cantidad"
+                            (ngModelChange)="actualizarCantidadProducto(element)" type="number"
+                            class="form-control mb-2" />
+                    </mat-form-field>
+                </mat-cell>
+                <mat-footer-cell *matFooterCellDef class="footer-total">Total</mat-footer-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="subtotal">
+                <mat-header-cell *matHeaderCellDef> Subtotal </mat-header-cell>
+                <mat-cell *matCellDef="let element">{{
+                    element.subtotal | currency
+                    }}</mat-cell>
+                <mat-footer-cell *matFooterCellDef class="footer-total">
+                    {{ totalProductos | currency }}
+                </mat-footer-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="impuesto">
+                <mat-header-cell *matHeaderCellDef> Impuesto </mat-header-cell>
+                <mat-cell *matCellDef="let element">{{
+                    (element.subtotal * 0.13) | currency
+                    }}</mat-cell>
+                <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="acciones">
+                <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <button mat-icon-button (click)="eliminarItem(element)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </mat-cell>
+                <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns" class="header"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+            <mat-footer-row *matFooterRowDef="displayedColumns" class="footer-row"></mat-footer-row>
+        </mat-table>
+    </mat-card-content>
+
+    <mat-card-content *ngIf="dataSourceServices.data.length > 0">
+        <h2>Servicios</h2>
+        <p>Servicios que se han agregado a la compra</p>
+        <mat-table [dataSource]="dataSourceServices" class="mat-elevation-z8">
+            <ng-container matColumnDef="servicio">
+                <mat-header-cell *matHeaderCellDef> Servicio </mat-header-cell>
+                <mat-cell *matCellDef="let element">{{
+                    element.compra?.nombre || "No disponible"
+                    }}</mat-cell>
+                <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="precio">
+                <mat-header-cell *matHeaderCellDef> Precio </mat-header-cell>
+                <mat-cell *matCellDef="let element">{{
+                    element.precio | currency
+                    }}</mat-cell>
+                <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="cantidad">
+                <mat-header-cell *matHeaderCellDef> Cantidad </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <mat-form-field appearance="fill">
+                        <input matInput id="cantidad" [(ngModel)]="element.cantidad"
+                            (ngModelChange)="actualizarCantidadServicio(element)" type="number"
+                            class="form-control mb-2" />
+                    </mat-form-field>
+                </mat-cell>
+                <mat-footer-cell *matFooterCellDef class="footer-total">Total</mat-footer-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="subtotal">
+                <mat-header-cell *matHeaderCellDef> Subtotal </mat-header-cell>
+                <mat-cell *matCellDef="let element">{{
+                    element.subtotal | currency
+                    }}</mat-cell>
+                <mat-footer-cell *matFooterCellDef class="footer-total">
+                    {{ totalServicios | currency }}
+                </mat-footer-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="impuesto">
+                <mat-header-cell *matHeaderCellDef> Impuesto </mat-header-cell>
+                <mat-cell *matCellDef="let element">{{
+                    (element.subtotal * 0.13) | currency
+                    }}</mat-cell>
+                <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="acciones">
+                <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <button mat-icon-button (click)="eliminarItem(element)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </mat-cell>
+                <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumnsServices" class="header"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumnsServices"></mat-row>
+            <mat-footer-row *matFooterRowDef="displayedColumnsServices" class="footer-row"></mat-footer-row>
+        </mat-table>
+    </mat-card-content>
+
+
+    <mat-card-actions class="card-actions">
+        <h3>Total: {{ total | currency }}</h3>
+        <h3>Impuesto total: {{ (impuesto) | currency }}</h3>
+        <h3>Total con impuesto: {{ (total + impuesto) | currency }}</h3>
+        @if (this.currentUser?.role==='ADMIN' || this.currentUser?.role==='ENCARGADO') {
+        <button mat-raised-button color="primary" (click)="facturar()">
+            Emitir Factura
+            <mat-icon>shopping_bag</mat-icon>
+        </button>
+        }
+        <button mat-raised-button color="warn" (click)="limpiar()">
+            Limpiar
+            <mat-icon>clear</mat-icon>
+        </button>
+    </mat-card-actions>
+</mat-card>

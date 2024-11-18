@@ -1,0 +1,17 @@
+<mat-card class="shipping-card">
+    <mat-card-title>
+        <h4 class="titulo">Cantidad de producto ordenados en el mes: {{filtro}}</h4>
+    </mat-card-title>
+    <mat-form-field>
+        <mat-label>Sucursal a filtrar</mat-label>
+        <mat-select placeholder="Sucursal" [(ngModel)]="filtro" (ngModelChange)="inicioGrafico($event)">
+          <mat-option *ngFor="let s of sucursales" [value]="s.id">
+            {{ s.nombre }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    <mat-card-content class="contenido">
+        <canvas #graficoCanvas width="400" height="400"></canvas>
+    </mat-card-content>
+</mat-card>

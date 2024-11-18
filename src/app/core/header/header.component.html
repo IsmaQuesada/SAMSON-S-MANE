@@ -1,0 +1,78 @@
+<mat-toolbar color="primary" class="navbar">
+  <div class="navbar-logo">
+    <button mat-icon-button matTooltip="AppVideojuegos" [routerLink]="['/inicio']" routerLinkActive="link-active">
+      <mat-icon>home</mat-icon>
+    </button>
+  </div>
+
+  @if (isAuntenticated) {
+  <button mat-icon-button [matMenuTriggerFor]="menu1" class="navbar-menu" matTooltip="Menu">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <mat-menu #menu1="matMenu">
+    <button mat-menu-item [routerLink]="['/reserva']" routerLinkActive="link-active">
+      Lista de reservas
+    </button>
+
+    <button mat-menu-item [routerLink]="['/producto']" routerLinkActive="link-active">
+      Lista de productos
+    </button>
+
+    <button mat-menu-item [routerLink]="['/factura']" routerLinkActive="link-active">
+      Historial de facturas
+    </button>
+
+    <button mat-menu-item [routerLink]="['/servicio']" routerLinkActive="link-active">
+      Lista de servicios
+    </button>
+    <button mat-menu-item [routerLink]="['/sucursal']" routerLinkActive="link-active">
+      Lista de sucursales
+    </button>
+    @if (this.currentUser?.role !== 'CLIENT') {
+    <button mat-menu-item [routerLink]="['/horario']" routerLinkActive="link-active">
+      Lista de Horarios
+    </button>
+    }
+    @if (this.currentUser?.role === 'ENCARGADO') {
+    <button mat-menu-item [routerLink]="['masVendidos/1']" routerLinkActive="link-active">Reportes Citas</button>
+    <button mat-menu-item [routerLink]="['reservaEstado']" routerLinkActive="link-active">Reportes Citas estado</button>
+    <button mat-menu-item [routerLink]="['/agenda']" routerLinkActive="link-active">Agenda</button>
+    }
+  </mat-menu>
+  }
+  <div class="spacer"></div>
+
+  <div class="navbar-actions">
+    @if (isAuntenticated && this.currentUser?.role !== 'CLIENT') {
+    <button mat-icon-button matBadgeColor="accent" [matBadge]="qtyItems.toString()" [routerLink]="'/facturar'"
+      routerLinkActive="link-active">
+      <mat-icon>shopping_cart</mat-icon>
+    </button>
+    }
+    <button mat-icon-button [matMenuTriggerFor]="menu3" matTooltip="Usuario">
+      <mat-icon [ngStyle]="{ color: isAuntenticated ? 'GREEN' : 'RED' }">person</mat-icon>
+    </button>
+    <mat-menu #menu3="matMenu">
+      <ng-container *ngIf="!isAuntenticated; else loggedIn">
+        <button mat-menu-item (click)="login()">
+          <mat-icon>person_add</mat-icon>
+          <span>Iniciar sección</span>
+        </button>
+      </ng-container>
+      <ng-template #loggedIn>
+        <span class="mat-caption" style="padding: 10px;">{{ currentUser?.email }}</span>
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>person_remove</mat-icon>
+          <span>Cerrar sección</span>
+        </button>
+        @if (this.currentUser?.role ==='ADMIN') {
+        <button mat-menu-item (click)="listUsers()">
+          <mat-icon>person</mat-icon>
+          <span>Usuarios</span>
+        </button>
+        }
+      </ng-template>
+    </mat-menu>
+  </div>
+</mat-toolbar>

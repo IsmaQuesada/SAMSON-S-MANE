@@ -1,0 +1,30 @@
+<div *ngIf="datos" class="service-container">
+    <mat-card class="service-card mat-elevation-z4">
+        <div class="service-details-container">
+            <mat-card-header>
+                <mat-card-title class="service-title">{{ datos?.nombre }}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="service-description">
+                    <h3>Descripción:</h3>
+                    <p>{{ datos.descripcion }}</p>
+                </div>
+                <div class="service-usage">
+                    <h3>Teléfono:</h3>
+                    <p>{{ datos.telefono }}</p>
+                </div>
+                <div class="service-usage">
+                    <h3>Dirección:</h3>
+                    <p>{{ datos.direccion }}</p>
+                </div>
+                <div class="service-usage">
+                    <h3>Email:</h3>
+                    <p>{{ datos.email }}</p>
+                </div>
+                <div class="action-buttons">
+                    <button mat-raised-button (click)="regresar()">Regresar</button>
+                </div>
+            </mat-card-content>
+        </div>
+    </mat-card>
+</div>

@@ -1,0 +1,65 @@
+<mat-card class="full-width">
+    <!-- Titulo del Card -->
+    <mat-card-header>
+        <mat-card-title>Sucursal</mat-card-title>
+        <mat-card-subtitle>
+            @if (this.currentUser?.role==='ADMIN') {
+            <a mat-mini-fab matTooltip="Crear Sucursal" aria-label="Crear Sucursal" color="primary"
+                (click)="crearSucursal()">
+                <mat-icon>add</mat-icon>
+            </a>
+            }
+        </mat-card-subtitle>
+    </mat-card-header>
+    <br>
+
+    <mat-card-content>
+        <hr />
+        <!-- Table -->
+        <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" class="full-width-table" matSort matSortStart="desc"
+                aria-label="Elements">
+
+                <ng-container matColumnDef="nombre">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
+                    <td mat-cell *matCellDef="let row">{{ row.nombre }}</td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="descripcion">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Descripción</th>
+                    <td mat-cell *matCellDef="let row">{{ row.descripcion }}</td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="telefono">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Teléfono</th>
+                    <td mat-cell *matCellDef="let row">{{ row.telefono }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="acciones">
+                    <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                    <td mat-cell *matCellDef="let row">
+                        @if (this.currentUser?.role==='ADMIN') {
+                        <button mat-mini-fab matTooltip="Actualizar Sucursal" aria-label="Actualizar Sucursal"
+                            color="primary" (click)="actualizarSucursal(row.id)">
+                            <mat-icon class="mat-18">edit</mat-icon>
+                        </button>
+                        }
+                        <button mat-mini-fab matTooltip="Detalle Sucursal" aria-label="Detalle Sucursal" color="primary"
+                            (click)="detalle(row.id)">
+                            <mat-icon class="mat-18">info</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+
+            <mat-paginator #paginator [length]="dataSource?.data?.length" [pageIndex]="0" [pageSize]="5"
+                [pageSizeOptions]="[3, 5, 10]" aria-label="Seleccione una pagina">
+            </mat-paginator>
+        </div>
+    </mat-card-content>
+</mat-card>

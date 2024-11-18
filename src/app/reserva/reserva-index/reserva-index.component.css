@@ -1,0 +1,41 @@
+
+
+
+/* src/app/reserva/reserva-index/reserva-index.component.css */
+.estado-circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  
+  /* styles.css o el archivo de estilos del componente */
+
+/* styles.css o el archivo de estilos del componente */
+
+#reservas-form {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+#reservas-form h3 {
+  margin-top: 0;
+  margin-bottom: 8px; /* Espacio debajo del título */
+  font-weight: bold;
+  color: #333; /* Color del texto, ajustable según diseño */
+}
+
+#reservas-form .mat-form-field {
+  margin-bottom: 16px; /* Espacio entre los campos de formulario */
+}
+
+#reservas-form .full-width {
+  width: 100%;
+}
+
+#reservas-form .almost-full-width {
+  width: 20%;
+}
+
+

@@ -1,0 +1,87 @@
+<form [formGroup]="horarioForm" (ngSubmit)="submitHorario()" novalidate>
+    <input type="hidden" formControlName="id" />
+    <mat-card class="shipping-card">
+        <mat-card-header>
+            <mat-card-title>{{ titleForm }} Horario</mat-card-title>
+        </mat-card-header>
+        <br>
+        <mat-card-content>
+            <div class="row">
+                <div class="col" *ngIf="sucursalesList">
+                    <mat-form-field class="full-width">
+                        <mat-select placeholder="Sucursales" formControlName="sucursales">
+                            @for (item of sucursalesList; track item.id) {
+                            <mat-option [value]="item.id">
+                                {{item.nombre}}
+                            </mat-option>
+                            }
+
+                        </mat-select>
+                        @if(errorHandling('sucursales')){
+                        <mat-error>
+                            {{ errorHandling('sucursales') }}
+                        </mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-select placeholder="Día de la Semana" formControlName="dias">
+                            <mat-option *ngFor="let dia of diasSemana" [value]="dia">
+                                {{dia}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="errorHandling('dias')">
+                            {{ errorHandling('dias') }}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>Fecha</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName="fecha" readonly />
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <mat-error *ngIf="errorHandling('fecha')">
+                            {{ errorHandling('fecha') }}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>Hora de Inicio</mat-label>
+                        <input matInput formControlName="horaInicio" placeholder="HH:mm" />
+                        <mat-error *ngIf="errorHandling('horaInicio')">
+                            {{ errorHandling('horaInicio') }}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>Hora de Fin</mat-label>
+                        <input matInput formControlName="horaFin" placeholder="HH:mm" />
+                        <mat-error *ngIf="errorHandling('horaFin')">
+                            {{ errorHandling('horaFin') }}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </mat-card-content>
+        <br>
+        <mat-card-actions>
+            <div class="button-row">
+                <button mat-raised-button color="warn" type="button" (click)="onReset()">Reset</button>
+                <button mat-raised-button color="primary" type="button" (click)="onBack()">Regresar</button>
+                <button mat-raised-button color="accent" type="submit">Guardar</button>
+            </div>
+        </mat-card-actions>
+    </mat-card>
+</form>

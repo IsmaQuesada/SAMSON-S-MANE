@@ -1,0 +1,52 @@
+<div *ngIf="datos" class="product-container">
+    <mat-card class="product-card mat-elevation-z4">
+        <div class="product-image-container">
+            <img mat-card-image [src]="'../../assets/images/' + datos.imagen" [alt]="datos.nombre"
+                class="product-image" />
+        </div>
+        <div class="product-details-container">
+            <mat-card-header>
+                <mat-card-title class="product-title">{{
+                    datos?.nombre
+                    }}</mat-card-title>
+                <mat-card-subtitle>
+                    <span class="product-brand">{{ datos.marca }}</span>
+                </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="price-section">
+                    <p class="new-price">{{ datos.precio | currency : "USD" }}</p>
+                </div>
+                <div class="product-description">
+                    <h3>Descripción:</h3>
+                    <p>{{ datos.descripcion }}</p>
+                </div>
+                <div class="product-usage">
+                    <h3>Producto utilizado para:</h3>
+                    <p>{{ datos.uso }}</p>
+                </div>
+                <div class="product-category">
+                    <h3>Categoría:</h3>
+                    <mat-chip-listbox aria-label="Categoría">
+                        <mat-chip-option color="accent" selected>
+                            {{ datos.categoria.nombre }}
+                        </mat-chip-option>
+                    </mat-chip-listbox>
+                </div>
+                <div class="action-buttons">
+                    @if (isAuntenticated && this.currentUser?.role !== 'CLIENT') {
+                    <button mat-raised-button color="primary" (click)="comprar(datos.id)">
+                        Añadir al Carrito
+                    </button>
+                    }
+                    <button mat-raised-button (click)="regresar()">Regresar</button>
+                    @if (this.currentUser?.role==='ADMIN') {
+                    <button mat-raised-button (click)="actualizarProducto(datos.id)">
+                        Actualizar
+                    </button>
+                    }
+                </div>
+            </mat-card-content>
+        </div>
+    </mat-card>
+</div>

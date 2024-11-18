@@ -1,0 +1,81 @@
+<form [formGroup]="servicioForm" (ngSubmit)="submitServicio()" novalidate>
+  <input type="hidden" formControlName="id" />
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>{{ titleForm }} Servicio</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Nombre</mat-label>
+            <input matInput formControlName="nombre" maxlength="20">
+            <mat-error *ngIf="errorHandling('nombre')">
+              {{ errorHandling('nombre') }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Descripción</mat-label>
+            <input matInput formControlName="descripcion">
+            <mat-error *ngIf="errorHandling('descripcion')">
+              {{ errorHandling('descripcion') }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Tarifa</mat-label>
+            <input matInput formControlName="tarifa">
+            <mat-error *ngIf="errorHandling('tarifa')">
+              {{ errorHandling('tarifa') }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Tiempo del Servicio</mat-label>
+            <input matInput formControlName="tiempoServicio">
+            <mat-error *ngIf="errorHandling('tiempoServicio')">
+              {{ errorHandling('tiempoServicio') }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Requisitos Previos</mat-label>
+            <input matInput formControlName="requisitosPrevios">
+            <mat-error *ngIf="errorHandling('requisitosPrevios')">
+              {{ errorHandling('requisitosPrevios') }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Precauciones</mat-label>
+            <input matInput formControlName="Precauciones">
+            <mat-error *ngIf="errorHandling('Precauciones')">
+              {{ errorHandling('Precauciones') }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+    <br>
+    <mat-card-actions>
+      <div class="button-row">
+        <button mat-raised-button color="warn" type="button" (click)="onReset()">Reset</button>
+        <button mat-raised-button color="primary" type="button" (click)="onBack()">Regresar</button>
+        <button mat-raised-button color="accent" type="submit">Guardar</button>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+</form>

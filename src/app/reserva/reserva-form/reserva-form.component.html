@@ -1,0 +1,169 @@
+<form [formGroup]="reservaForm" (ngSubmit)="submitReserva()" novalidate>
+  <input type="hidden" formControlName="id" />
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>{{titleForm}} Reserva</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <!-- Contenedor para separar el formulario en dos columnas -->
+      <div class="row">
+        <!-- Primera columna -->
+        <div class="col-1">
+          <!-- Sucursal (Branch) -->
+          <mat-form-field class="form-field">
+            <mat-label>Sucursal</mat-label>
+            <input matInput [value]="sucursalInfo?.nombre" readonly />
+          </mat-form-field>
+
+          <!-- Fecha -->
+          <mat-form-field class="almost-full-width">
+            <mat-label>Seleccione una fecha</mat-label>
+            <input formControlName="fecha" matInput [matDatepicker]="picker" (dateChange)="onDateChange($event)"
+              [matDatepickerFilter]="dateFilter">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="errorHandling('fecha')">
+              {{ errorHandling('fecha') }}
+            </mat-error>
+
+          </mat-form-field>
+
+
+          <!-- Cliente (Client) -->
+          <mat-form-field class="form-field">
+            <mat-label>Cliente</mat-label>
+            <mat-select formControlName="selectedClient" placeholder="Cliente"
+              (selectionChange)="onClientSelect($event.value)">
+              <mat-option *ngFor="let client of clients; trackBy: trackById" [value]="client">
+                {{ client.nombre }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="errorHandling('selectedClient')">
+              {{ errorHandling('selectedClient') }}
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="form-field">
+            <mat-label>Nombre Completo</mat-label>
+            <input matInput [value]="selectedClient?.nombre" readonly />
+          </mat-form-field>
+          <mat-form-field class="form-field">
+            <mat-label>Email</mat-label>
+            <input matInput [value]="selectedClient?.email" readonly />
+          </mat-form-field>
+
+          <!-- Servicio (Service) -->
+          <mat-form-field class="form-field">
+            <mat-label>Servicio</mat-label>
+            <mat-select formControlName="selectedService" (selectionChange)="onServiceSelect($event.value)">
+              <mat-option *ngFor="let service of services" [value]="service">
+                {{ service.nombre }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="errorHandling('selectedService')">
+              {{ errorHandling('selectedService') }}
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="form-field">
+            <mat-label>Tiempo Requerido</mat-label>
+            <input matInput [value]="selectedService?.tiempoServicio" readonly />
+          </mat-form-field>
+        </div>
+
+        <!-- Segunda columna -->
+        <div class="col-2">
+          <!-- reserva-form.component.html -->
+          <mat-form-field appearance="fill">
+            <mat-label>Horario disponible</mat-label>
+            <mat-select formControlName="selectedHorario" (selectionChange)="onHorarioSelect($event.value)">
+              <mat-option *ngFor="let horario of horarios" [value]="horario" class="horario-option">
+                <div class="horario-card">
+                  <p class="horario-time">{{ horario.hora_inicio }} - {{ horario.hora_fin }}</p>
+                </div>
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="errorHandling('selectedHorario')">
+              {{ errorHandling('selectedHorario') }}
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Mostrar la tarjeta con la información del horario seleccionado -->
+          <mat-card id="horario-card" *ngIf="selectedHorario">
+            <mat-card-header id="horario-card-header">
+              <mat-card-title id="horario-card-title">Horario Seleccionado</mat-card-title>
+            </mat-card-header>
+            <mat-card-content id="horario-card-content">
+              <p><strong>Fecha:</strong> {{ selectedHorario.fecha | date:'fullDate' }}</p>
+              <p><strong>Inicio:</strong> {{ selectedHorario.hora_inicio }}</p>
+              <p><strong>Fin:</strong> {{ selectedHorario.hora_fin }}</p>
+            </mat-card-content>
+          </mat-card>
+
+          <!--horas disponibles para la llegada del cliente-->
+          <mat-form-field appearance="fill">
+            <mat-label>Hora de llegada</mat-label>
+            <mat-select formControlName="selectedHoraLlegada" (selectionChange)="onArrivalTimeSelect($event.value)">
+              <mat-option *ngFor="let time of availableArrivalTimes" [value]="time">
+                {{ time }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="errorHandling('selectedHoraLlegada')">
+              {{ errorHandling('selectedHoraLlegada') }}
+            </mat-error>
+          </mat-form-field>
+
+          <br>
+          <br>
+
+          <!-- Seccion de preguntas -->
+          <h2>Preguntas sobre el Servicio</h2>
+          <!-- Campo TipoCorte -->
+          <mat-form-field appearance="fill">
+            <mat-label id="tipo-corte-label">Tipo de Corte</mat-label>
+            <input formControlName="TipoCorte" matInput id="tipo-corte-input" placeholder="Ingrese el tipo de corte" />
+            <mat-error *ngIf="errorHandling('TipoCorte')">
+              {{ errorHandling('TipoCorte') }}
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Campo Alergias -->
+          <mat-form-field appearance="fill">
+            <mat-label id="alergias-label">Alergias</mat-label>
+            <input formControlName="alergias" matInput id="alergias-input"
+              placeholder="Ingrese alergias si las tiene" />
+            <mat-error *ngIf="errorHandling('alergias')">
+              {{ errorHandling('alergias') }}
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Campo Preferencia de Productos -->
+          <mat-form-field appearance="fill">
+            <mat-label id="preferencia-productos-label">Preferencia de Productos</mat-label>
+            <input formControlName="preferenciaProductos" matInput id="preferencia-productos-input"
+              placeholder="Ingrese sus preferencias de productos" />
+            <mat-error *ngIf="errorHandling('preferenciaProductos')">
+              {{ errorHandling('preferenciaProductos') }}
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Seccion de preguntas -->
+          <h2>Estado</h2>
+          <!-- Mostrar el estado con color -->
+          <div matTooltip="Pendiente" [ngStyle]="{'background-color': '#FFC107'}" class="estado-circle">
+
+          </div>
+
+
+
+
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <div class="example-button-row">
+        <button mat-raised-button color="warn" type="button" (click)="onReset()">Reset</button>
+        <button mat-raised-button color="primary" type="button" (click)="onBack()">Regresar</button>
+        <button mat-raised-button color="accent" type="submit">Guardar</button>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+</form>

@@ -1,0 +1,132 @@
+.factura-container {
+    padding: 30px;
+    background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+    border-radius: 15px;
+    font-family: 'Roboto', sans-serif;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    max-width: 80%;
+    margin: 20px auto;
+}
+
+.factura-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding: 10px;
+    background: #1976d2;
+    color: #fff;
+    border-radius: 10px;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.empresa-logo {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.empresa-logo img {
+    height: auto;
+    width: 8vw;
+    border-radius: 1.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.empresa-info {
+    flex: 4;
+    text-align: left;
+    font-size: 14px;
+    margin-left: 20px;
+}
+
+.factura-header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.factura-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.factura-info p {
+    margin: 2px 0;
+}
+
+.cliente-info p {
+    font-size: 16px;
+    margin: 0;
+}
+
+.factura-detalles p {
+    font-size: 16px;
+    text-align: right;
+    margin: 0;
+}
+
+.factura-body {
+    margin-top: 20px;
+}
+
+.table-container {
+    margin-bottom: 30px;
+    background: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.table-container h2 {
+    color: #333333;
+    margin: 20px;
+    font-size: 20px;
+    border-bottom: 2px solid #e3f2fd;
+    padding-bottom: 10px;
+}
+
+.mat-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.mat-header-cell {
+    background-color: #333333;
+    color: #ffffff;
+    font-weight: bold;
+    text-align: left;
+    padding: 15px;
+}
+
+.mat-cell {
+    text-align: left;
+    padding: 15px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.mat-header-row {
+    background-color: #f5f5f5;
+}
+
+.factura-footer {
+    text-align: right;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px solid #333333;
+}
+
+.totales p {
+    margin: 5px 0;
+    font-size: 16px;
+}
+
+.totales p strong {
+    color: #333333;
+}

@@ -1,0 +1,71 @@
+grid-container {
+    margin: 5px;
+}
+
+img {
+    aspect-ratio: 1;
+    object-position: center;
+    border-radius: 1rem;
+    margin: 10px;
+}
+
+.mdc-card {
+    border-radius: 1rem;
+    filter: drop-shadow(0px 0px 10px #26323836);
+    border-radius: 1rem;
+}
+
+.card-buttons {
+    justify-content: space-between;
+    margin: 0 15px;
+
+    button {
+        width: calc(90%/2);
+        border-radius: 1rem;
+    }
+}
+
+.dashboard-card {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+}
+
+.more-button {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+}
+
+.full-width {
+    width: 80%;
+}
+
+.dashboard-card-header {
+    font-weight: 500;
+    margin-bottom: 0;
+    padding: 0.5em;
+    text-align: center;
+    font-size: 1.5em;
+    background-color: #00bfa5;
+    color: white;
+}
+
+.dashboard-card-content {
+    line-height: 1.5em;
+    padding: 1.5em;
+}
+
+.price {
+    font-weight: 800;
+    font-size: 2em;
+    margin-top: 10px;
+}
+
+.dashboard-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

@@ -1,0 +1,120 @@
+<form [formGroup]="productoForm" (ngSubmit)="submitPProducto()" novalidate>
+  <input type="hidden" formControlName="id" />
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>{{titleForm}} Producto</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Nombre</mat-label>
+            <input matInput formControlName="nombre" maxlength="20" placeholder="Nombre">
+            <mat-error *ngIf="errorHandling('nombre')">
+              {{ errorHandling('nombre') }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Descripción</mat-label>
+            <input matInput formControlName="descripcion" placeholder="Descripción">
+            <mat-error *ngIf="errorHandling('descripcion')">
+              {{ errorHandling('descripcion') }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Precio</mat-label>
+            <input matInput formControlName="precio" placeholder="Precio">
+            <mat-error *ngIf="errorHandling('precio')">
+              {{ errorHandling('precio') }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Marca</mat-label>
+            <input matInput formControlName="marca" placeholder="Marca">
+            <mat-error *ngIf="errorHandling('marca')">
+              {{ errorHandling('marca') }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Uso</mat-label>
+            <input matInput formControlName="uso" placeholder="Uso">
+            <mat-error *ngIf="errorHandling('uso')">
+              {{ errorHandling('uso') }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-label>Categorías</mat-label>
+        </div>
+        <div class="col">
+          <button mat-fab extended type="button" (click)="addCategoria()"><mat-icon>add</mat-icon> Agregar
+            Categoría</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <table class="table">
+          <thead>
+
+          </thead>
+          <tbody>
+            <!-- Array de categorías -->
+            <tr formArrayName="categoriaArray" *ngFor="let p of categoriaArray.controls; let i = index">
+              <td>
+                <mat-form-field [formGroupName]="i">
+                  <mat-select placeholder="Categoría" formControlName="id" id="{{'id'+i}}">
+                    <mat-option *ngFor="let item of categoriaList; trackBy: trackById" [value]="item.id">
+                      {{item.nombre}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </td>
+              <td>
+                <button mat-mini-fab type="button" (click)="removeCategoria(i)"><mat-icon>delete</mat-icon></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-label>Imagen </mat-label>
+          @if (isCreate) {
+          <input type="file" accept="image/*" (change)="selectFile($event)" />
+          <img width="70%" height="auto" mat-card-image [src]="'../../assets/images/' + nameImage" alt="Imagen Producto">
+          }@else{
+          <input type="file" accept="image/*" (change)="selectFile($event)" />
+          <img width="70%" height="auto" mat-card-image [src]="'http://localhost:3000/images/'+ nameImage" alt="Imagen Producto">
+          }
+          <input type="hidden" />
+        </div>
+      </div>
+
+    </mat-card-content>
+    <mat-card-actions>
+      <div class="example-button-row">
+        <button mat-raised-button color="warn" type="button" (click)="onReset()">Reset</button>
+        <button mat-raised-button color="primary" type="button" (click)="onBack()">Regresar</button>
+        <button mat-raised-button color="accent" type="submit">Guardar</button>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+</form>

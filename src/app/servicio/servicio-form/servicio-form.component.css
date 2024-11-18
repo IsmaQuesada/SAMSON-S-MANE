@@ -1,0 +1,53 @@
+.full-width {
+  width: 100%;
+}
+
+.shipping-card {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+}
+
+.mat-radio-button {
+  display: block;
+  margin: 5px 0;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
+}
+
+.col {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.col:last-child {
+  margin-right: 0;
+}
+
+.button-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.table {
+  margin: 1em;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.table th {
+  background-color: #4a148c;
+}
+
+.table td, .table th {
+  border: 1px solid white;
+  border-collapse: collapse;
+  padding: 0.5em;
+}

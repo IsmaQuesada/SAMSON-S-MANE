@@ -1,0 +1,95 @@
+<!-- src/app/reserva/reserva-index/reserva-index.component.html -->
+<mat-card class="container" style="padding: 50px;">
+    <mat-card-header>
+        <h1 class="mat-h1">Reservas</h1>
+
+    </mat-card-header>
+    @if (isAuntenticated && this.currentUser?.role !== 'ADMIN') {
+    <mat-card-subtitle>
+        <a mat-mini-fab matTooltip="Crear Reserva" aria-label="Crear Reserva" color="primary" (click)="crearReserva()">
+            <mat-icon>add</mat-icon>
+        </a>
+    </mat-card-subtitle>
+    }
+    <br>
+    <br>
+    <mat-divider></mat-divider>
+    @if (isAuntenticated && this.currentUser?.role === 'ENCARGADO') {
+    <mat-card-content id="reservas-form">
+        <!-- Título para el filtro por nombre -->
+        <h3>Buscar por Nombre del Cliente</h3>
+        <mat-form-field class="almost-full-width">
+            <mat-label>Nombre Cliente</mat-label>
+            <input matInput #nCliente [(ngModel)]="filtro" (ngModelChange)="buscarResesrvarClientes(nCliente.value)" />
+            <mat-hint>{{nCliente.value.length}} /20</mat-hint>
+            <button mat-icon-button matSuffix color="primary">
+                <mat-icon>search</mat-icon>
+            </button>
+        </mat-form-field>
+        <br>
+        <!-- Título para el filtro por fecha -->
+        <h3>Buscar por Fecha</h3>
+        <mat-form-field class="almost-full-width">
+            <mat-label>Seleccione una fecha</mat-label>
+            <input matInput [matDatepicker]="picker" [(ngModel)]="fechaSeleccionada" (dateChange)="onDateChange($event)"
+                readonly />
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <button mat-raised-button color="warn" (click)="limpiar()" style="width: 10%;">
+            Limpiar
+            <mat-icon>clear</mat-icon>
+        </button>
+    </mat-card-content>
+
+
+    }
+
+
+    <mat-card-content>
+        <table mat-table [dataSource]="dataSource" class="full-width-table table" matSort matSortStart="desc"
+            aria-label="Elements">
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>No. Reserva</th>
+                <td mat-cell *matCellDef="let row">{{ row.id }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="fecha">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha</th>
+                <td mat-cell *matCellDef="let row">{{ row.fecha | date: 'dd/MM/yyyy HH:mm' }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="cliente">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Cliente</th>
+                <td mat-cell *matCellDef="let row">{{ row.cliente.nombre }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="estado">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Estado</th>
+                <td mat-cell *matCellDef="let row">
+                    <div [matTooltip]="row.estado" [ngStyle]="{'background-color': estadoColors[row.estado]}"
+                        class="estado-circle">
+                    </div>
+
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="acciones">
+                <th mat-header-cell *matHeaderCellDef>Detalles</th>
+                <td mat-cell *matCellDef="let row">
+                    <button mat-mini-fab matTooltip="Detalle de Reserva" aria-label="Detalle de Reserva" color="primary"
+                        (click)="detalle(row.id)">
+                        <mat-icon class="mat-18">info</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+
+        <mat-paginator #paginator [length]="dataSource?.data?.length" [pageIndex]="0" [pageSize]="5"
+            [pageSizeOptions]="[3, 5, 10]" aria-label="Seleccione una pagina"></mat-paginator>
+    </mat-card-content>
+</mat-card>

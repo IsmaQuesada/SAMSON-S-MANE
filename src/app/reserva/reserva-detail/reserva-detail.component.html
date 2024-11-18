@@ -1,0 +1,67 @@
+<div class="reserva-container mat-elevation-z0">
+    <div class="reserva-header">
+        <h1>Reserva</h1>
+        <div class="empresa-info">
+            <p><strong>Sucursal:</strong> {{ datos.sucursal.nombre }}</p>
+            <p>Dirección: {{ datos.sucursal.direccion }}</p>
+            <p>Teléfono: {{ datos.sucursal.telefono }}</p>
+            <p>Email: {{ datos.sucursal.email }}</p>
+            <p><strong>Encargado:</strong> {{ encargadoNombre }}</p>
+            <p *ngFor="let encargado of datos.sucursal.encargados">
+                Encargado: {{ encargado.email }}
+            </p>
+        </div>
+        <mat-divider></mat-divider>
+    </div>
+
+    <div class="reserva-info">
+        <div class="cliente-info">
+            <p><strong>CLIENTE</strong></p>
+            <p>{{ datos.cliente.nombre }}</p>
+            <p>{{ datos.cliente.telefono }}</p>
+            <p>{{ datos.cliente.email }}</p>
+        </div>
+
+        <div class="cliente-info">
+            <p><strong>Reserva</strong></p>
+            <p>Fecha: {{ datos.fecha | date: 'dd/MM/yyyy HH:mm' }}</p>
+            <p>Estado: {{ datos.estado }}</p>
+            <!--<p>{{ datos.cliente.email }}</p>-->
+        </div>
+    </div>
+
+    <div class="reserva-body">
+        <table mat-table [dataSource]="[datos]" class="mat-elevation-z1" *ngIf="datos">
+
+            <ng-container matColumnDef="servicio">
+                <th mat-header-cell *matHeaderCellDef> SERVICIO </th>
+                <td mat-cell *matCellDef="let element"> {{element.servicio?.nombre}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="TipoCorte">
+                <th mat-header-cell *matHeaderCellDef> TIPO DE CORTE </th>
+                <td mat-cell *matCellDef="let element"> {{element.TipoCorte}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="alergias">
+                <th mat-header-cell *matHeaderCellDef> ALERGIAS </th>
+                <td mat-cell *matCellDef="let element"> {{element.alergias}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="preferenciaProductos">
+                <th mat-header-cell *matHeaderCellDef> PREFERENCIAS DE PRODUCTO </th>
+                <td mat-cell *matCellDef="let element"> {{element.preferenciaProductos}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+
+    <div class="reserva-footer">
+        <div class="totales" *ngIf="datos?.factura">
+            <p><strong>TOTAL FACTURA</strong> {{ datos.factura.Total | currency }}</p>
+        </div>
+    </div>
+
+</div>

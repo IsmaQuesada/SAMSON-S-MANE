@@ -1,0 +1,39 @@
+<div *ngIf="datos" class="service-container">
+    <mat-card class="service-card mat-elevation-z4">
+        <div class="service-details-container">
+            <mat-card-header>
+                <mat-card-title class="service-title">{{ datos?.nombre }}</mat-card-title>
+                <mat-card-subtitle>
+                    <span class="service-brand">{{ datos.marca }}</span>
+                </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="price-section">
+                    <p class="new-price">{{ datos.tarifa | currency: 'USD' }}</p>
+                </div>
+                <div class="service-description">
+                    <h3>Descripción:</h3>
+                    <p>{{ datos.descripcion }}</p>
+                </div>
+                <div class="service-usage">
+                    <h3>Requisitos Previos:</h3>
+                    <p>{{ datos.requisitosPrevios }}</p>
+                </div>
+                <div class="service-category">
+                    <h3>Tiempo Servicio:</h3>
+                    <mat-chip-listbox aria-label="Tiempo Servicio">
+                        <mat-chip-option color="accent" selected>
+                            {{ datos.tiempoServicio }}
+                        </mat-chip-option>
+                    </mat-chip-listbox>
+                </div>
+                <div class="action-buttons">
+                    @if (this.currentUser?.role !== 'CLIENT') {
+                    <button mat-raised-button color="primary">Añadir al Carrito</button>
+                    }
+                    <button mat-raised-button (click)="regresar()">Regresar</button>
+                </div>
+            </mat-card-content>
+        </div>
+    </mat-card>
+</div>

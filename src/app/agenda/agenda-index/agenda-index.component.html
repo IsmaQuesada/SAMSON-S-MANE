@@ -1,0 +1,47 @@
+<div class="calendar">
+    <div class="calendar-header">
+        <button (click)="prevMonth()">&#8249;</button>
+        <h2>{{ currentMonth.format('MMMM YYYY') }}</h2>
+        <button (click)="nextMonth()">&#8250;</button>
+    </div>
+
+    <!-- Selector de Sucursal para Admin -->
+    <div *ngIf="usuario?.role === 'ADMIN'" class="sucursal-selector">
+        <label for="sucursal">Selecciona una sucursal:</label>
+        <select id="sucursal" (change)="onSucursalChange($event)">
+            <option *ngFor="let sucursal of sucursales" [value]="sucursal.id">
+                {{ sucursal.nombre }}
+            </option>
+        </select>
+    </div>
+
+    <div class="calendar-grid">
+        <div class="calendar-day" *ngFor="let day of weekDays">{{ day.format('dd') }}</div>
+        <div *ngFor="let day of calendarDays" class="calendar-day" [ngClass]="getDayClasses(day.date)">
+            <span>{{ day.date.format('D') }}</span>
+            <button *ngIf="hasReserva(day.date)" class="detail-btn" (click)="openModal(day.date)">
+                <i class="fas fa-info-circle"></i>
+            </button>
+        </div>
+    </div>
+
+
+
+</div>
+
+<!-- Modal -->
+<div class="modal" [ngClass]="{'show': showModal}">
+    <div class="modal-content">
+        <span class="close" (click)="closeModal()">&times;</span>
+        <div *ngIf="selectedReserva">
+            <h2>Detalles de la Reserva</h2>
+            <p><strong>Fecha:</strong> {{ selectedReserva.fecha | date:'shortDate' }}</p>
+            <p><strong>Hora:</strong> {{ selectedReserva.hora }}</p>
+            <p><strong>Tipo de Corte:</strong> {{ selectedReserva.TipoCorte }}</p>
+            <p><strong>Alergias:</strong> {{ selectedReserva.alergias }}</p>
+            <p><strong>Preferencia de Productos:</strong> {{ selectedReserva.preferenciaProductos }}</p>
+            <p><strong>Estado:</strong> {{ selectedReserva.estado }}</p>
+            <p><strong>Cliente:</strong> {{ selectedReserva.cliente.nombre }}</p>
+        </div>
+    </div>
+</div>

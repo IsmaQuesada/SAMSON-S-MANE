@@ -1,0 +1,19 @@
+.full-width-table {
+    width: 100%;
+}
+
+mat-card-header {
+    margin-bottom: 20px;
+}
+
+mat-card-title {
+    margin-bottom: 10px;
+}
+
+.full-width {
+    width: 20%;
+}
+
+mat-card {
+    padding: 0 6rem
+}

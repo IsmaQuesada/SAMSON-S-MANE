@@ -1,0 +1,99 @@
+<form [formGroup]="formCreate" novalidate>
+    <mat-card class="shipping-card">
+        <mat-card-header>
+            <mat-card-title>Crear Usuario </mat-card-title>
+        </mat-card-header>
+        <br>
+        <mat-card-content>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>Nombre</mat-label>
+                        <input matInput type="text" placeholder="Nombre usuario" formControlName="nombre" />
+                        @if (errorHandling('nombre')) {
+                        <mat-error>
+                            {{errorHandling('nombre')}}
+                        </mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>Teléfono</mat-label>
+                        <input matInput type="number" placeholder="Teléfono usuario" formControlName="tel" min="0" />
+                        @if (errorHandling('tel')) {
+                        <mat-error>
+                            {{errorHandling('tel')}}
+                        </mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>Email</mat-label>
+                        <input matInput type="text" placeholder="Email usuario" formControlName="email" />
+                        @if (errorHandling('email')) {
+                        <mat-error>
+                            {{errorHandling('email')}}
+                        </mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>Fecha de nacimiento</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName="fecha" readonly
+                            placeholder="Fecha de nacimiento" />
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        @if (errorHandling('fecha')) {
+                        <mat-error>
+                            {{errorHandling('fecha')}}
+                        </mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>Contraseña</mat-label>
+                        <input matInput [type]="hide ? 'password' : 'text'" placeholder="Contraseña usuario"
+                            formControlName="password" />
+                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                            [attr.aria-pressed]="hide">
+                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                        @if (errorHandling('password')) {
+                        <mat-error>
+                            {{errorHandling('password')}}
+                        </mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+            </div>
+            <!-- <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>Rol</mat-label>
+                        <mat-select placeholder="Rol" formControlName="role">
+                            <mat-option *ngFor="let r of roles" [value]="r.id">
+                                {{ r.nombre }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div> -->
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button color="primary" (click)="submitForm()">Registrar</button>
+            <button mat-raised-button color="accent" type="reset" (click)="onReset()">Cancelar</button>
+        </mat-card-actions>
+    </mat-card>
+</form>

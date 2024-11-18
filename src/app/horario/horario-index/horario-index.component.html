@@ -1,0 +1,143 @@
+<mat-card>
+    <mat-card-header *ngIf="currentUser?.role !== 'ENCARGADO'">
+        <mat-form-field class="full-width">
+            <mat-label>Seleccione la sucursal</mat-label>
+            <mat-select (selectionChange)="onSucursalChange($event)">
+                <mat-option *ngFor="let sucursal of sucursales" [value]="sucursal.id">
+                    {{ sucursal.nombre }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </mat-card-header>
+
+    <!-- Titulo del Card -->
+    <ng-container *ngIf="selectedSucursalId">
+        <!-- Titulo del Card -->
+        <mat-card-header>
+            <mat-card-title>Horario</mat-card-title>
+            <mat-card-subtitle>
+                <ng-container *ngIf="currentUser?.role === 'ADMIN' || currentUser?.role === 'ENCARGADO'">
+                    <a mat-mini-fab matTooltip="Crear Horario" aria-label="Crear Horario" color="primary"
+                        (click)="crearHorario()">
+                        <mat-icon>add</mat-icon>
+                    </a>
+                </ng-container>
+            </mat-card-subtitle>
+        </mat-card-header>
+
+        <!-- Tabla Horarios -->
+        <table mat-table [dataSource]="horariosDataSource" class="full-width-table" matSort matSortStart="desc"
+            aria-label="Horarios">
+            <ng-container matColumnDef="sucursal">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Sucursal</th>
+                <td mat-cell *matCellDef="let row">{{ row.sucursal }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="diaSemana">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    Día de la Semana
+                </th>
+                <td mat-cell *matCellDef="let row">{{ row.diaSemana }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="fecha">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha</th>
+                <td mat-cell *matCellDef="let row">{{ row.fecha | date:'dd/MM/yyyy' }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="horaInicio">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Hora de Inicio</th>
+                <td mat-cell *matCellDef="let row">{{ row.horaInicio | date:'h:mm a'}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="horaFin">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Hora de Fin</th>
+                <td mat-cell *matCellDef="let row">{{ row.horaFin | date:'h:mm a'}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="acciones">
+                <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                <td mat-cell *matCellDef="let row">
+                    <!-- <button mat-mini-fab matTooltip="Actualizar Servicio" aria-label="Actualizar Servicio" color="primary"
+                    (click)="actualizarServicios(row.id)">
+                    <mat-icon class="mat-18">edit</mat-icon>
+                </button> -->
+                    <button mat-mini-fab matTooltip="Detalle horario" aria-label="Detalle horario" color="primary"
+                        (click)="detalleHorario(row.id)">
+                        <mat-icon class="mat-18">info</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="horariosDisplayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: horariosDisplayedColumns"></tr>
+        </table>
+        <mat-paginator #paginator [length]="horariosDataSource?.data?.length" [pageIndex]="0" [pageSize]="5"
+            [pageSizeOptions]="[3, 5, 10]" aria-label="Seleccione una pagina">
+        </mat-paginator>
+
+        <!-- Titulo del Card -->
+        <mat-card-header>
+            <mat-card-title>Bloqueos</mat-card-title>
+            <mat-card-subtitle>
+                <ng-container *ngIf="currentUser?.role === 'ADMIN' || currentUser?.role === 'ENCARGADO'">
+                    <a mat-mini-fab matTooltip="Crear Bloqueo" aria-label="Crear Bloqueo" color="primary"
+                        (click)="crearBloqueo()">
+                        <mat-icon>add</mat-icon>
+                    </a>
+                </ng-container>
+            </mat-card-subtitle>
+        </mat-card-header>
+
+        <!-- Tabla Días Bloqueados -->
+        <table mat-table [dataSource]="diasBloqueadosDataSource" class="full-width-table" matSort matSortStart="desc"
+            aria-label="Días Bloqueados">
+            <ng-container matColumnDef="sucursal">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Sucursal</th>
+                <td mat-cell *matCellDef="let row">{{ row.sucursal }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="diaSemana">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    Día de la Semana
+                </th>
+                <td mat-cell *matCellDef="let row">{{ row.diaSemana }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="fecha">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha</th>
+                <td mat-cell *matCellDef="let row">{{ row.fecha | date:'dd/MM/yyyy' }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="horaInicio">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Hora de Inicio</th>
+                <td mat-cell *matCellDef="let row">{{ row.horaInicio | date:'h:mm a'}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="horaFin">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Hora de Fin</th>
+                <td mat-cell *matCellDef="let row">{{ row.horaFin | date:'h:mm a'}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="acciones">
+                <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                <td mat-cell *matCellDef="let row">
+                    <!-- <button mat-mini-fab matTooltip="Actualizar bloqueo" aria-label="Actualizar bloqueo" color="primary"
+                    (click)="actualizarServicios(row.id)">
+                    <mat-icon class="mat-18">edit</mat-icon>
+                </button> -->
+                    <button mat-mini-fab matTooltip="Detalle bloqueo" aria-label="Detalle bloqueo" color="primary"
+                        (click)="detalleBloqueo(row.id)">
+                        <mat-icon class="mat-18">info</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="diasBloqueadosDisplayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: diasBloqueadosDisplayedColumns"></tr>
+        </table>
+        <mat-paginator #paginator [length]="diasBloqueadosDataSource?.data?.length" [pageIndex]="0" [pageSize]="5"
+            [pageSizeOptions]="[3, 5, 10]" aria-label="Seleccione una pagina">
+        </mat-paginator>
+    </ng-container>
+</mat-card>

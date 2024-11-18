@@ -1,0 +1,64 @@
+<div class="grid-container">
+    <mat-card style="display: flex; gap: 30px; margin: 0 0 50px;">
+        <mat-card-header>
+            <h1 class="mat-h1">Productos</h1>
+        </mat-card-header>
+        <mat-card-subtitle>
+            @if (this.currentUser?.role==='ADMIN') {
+            <a mat-mini-fab matTooltip="Crear Producto" aria-label="Crear Producto" color="primary"
+                (click)="crearProducto()">
+                <mat-icon>add</mat-icon>
+            </a>
+            }
+        </mat-card-subtitle>
+        <mat-card-content>
+            <mat-form-field class="full-width">
+                <mat-label>Filtrar por categoría</mat-label>
+                <mat-select multiple [(ngModel)]="categorias" (ngModelChange)="buscarProductos()">
+                    @for (item of lCategorias; track item.id) {
+                    <mat-option [value]="item.id">{{item.nombre}}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+
+            <!-- Espacio para el filtro de "Más ventas" -->
+            <div style="margin-top: 20px;">
+                <mat-button-toggle-group>
+                    <mat-button-toggle (click)="listMasVentas()">
+                        Filtrar por más ventas
+                    </mat-button-toggle>
+                    <mat-button-toggle (click)="listProductos()">
+                        Filtrar A-Z
+                    </mat-button-toggle>
+                </mat-button-toggle-group>
+            </div>
+
+        </mat-card-content>
+    </mat-card>
+    <mat-grid-list [cols]=" 4" rowHeight="1:1.5" gutterSize="10px" class="mdc-card">
+        @for (item of filterDatos; track item.id) {
+        <mat-grid-tile>
+            <mat-card class="dashboard-card">
+                <img mat-card-image [src]="'../../assets/images/' + item.imagen" [alt]="item.nombre" />
+                <mat-card-content class="dashboard-card-content" style="padding: 0.5rem 2rem 2rem; ">
+                    <h2>{{ item.nombre }}</h2>
+                    <p>{{ item.marca}}</p>
+                    <div class="price">{{ item.precio | currency : "USD" }}</div>
+                </mat-card-content>
+                <mat-card-actions class="card-buttons">
+                    <button mat-stroked-button color="accent" matTooltip="Detalle producto"
+                        aria-label="Detalle producto" color="primary" (click)="detalle(item.id)">
+                        Detalles
+                    </button>
+                    @if (isAuntenticated && this.currentUser?.role !== 'CLIENT') {
+                    <button mat-flat-button color="accent" matTooltip="Comprar" aria-label="Comprar" color="primary"
+                        (click)="comprar(item.id)">
+                        Añadir al carrito
+                    </button>
+                    }
+                </mat-card-actions>
+            </mat-card>
+        </mat-grid-tile>
+        }
+    </mat-grid-list>
+</div>

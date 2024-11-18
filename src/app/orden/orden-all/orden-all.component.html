@@ -1,0 +1,24 @@
+<!-- <div class="grid-container">
+    <mat-card>
+        <mat-card-header>
+            <h1 class="mat-h1">Ordenes</h1>
+        </mat-card-header>
+    </mat-card>
+    <mat-grid-list [cols]="3" rowHeight="20em" gutterSize="10px">
+        @for(item of datos; track item.id){
+        <mat-grid-tile>
+            <mat-card class="dashboard-card">
+                <mat-card-header class="dashboard-card-header">
+                    <mat-card-title> Orden # {{ item.id }} </mat-card-title>
+                </mat-card-header>
+                <mat-card-content class="dashboard-card-content">
+                    <p class="price">{{ item.fechaOrden| date: 'dd/MM/yyyy' }}</p>
+                    <p><b>Nombre usuario: </b> {{ item.usuario.nombre}} </p>
+                    <p><b>Email usuario: </b> {{item.usuario.email }}</p>
+
+                </mat-card-content>
+            </mat-card>
+        </mat-grid-tile>
+        }
+    </mat-grid-list>
+</div> -->

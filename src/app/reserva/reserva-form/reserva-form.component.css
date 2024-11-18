@@ -1,0 +1,120 @@
+/* Estilo para las filas y columnas del formulario */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Espacio entre las columnas */
+}
+
+.col-1, .col-2 {
+  flex: 1;
+  min-width: 300px; /* Ajusta según el tamaño deseado */
+}
+
+.shipping-card {
+  max-width: 1000px; /* Ajusta según el tamaño deseado */
+  margin: 20px auto;
+  padding: 20px;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.mat-card-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.mat-card-header {
+  background-color: #f5f5f5;
+}
+
+.mat-card-content {
+  padding: 16px;
+}
+
+.mat-card-actions {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+}
+
+/* Estilos adicionales según sea necesario */
+/* Estilos para el mat-select */
+
+.horario-option {
+  display: block;
+  padding: 10px;
+}
+
+.horario-card {
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  background-color: #f5f5f5;
+  padding: 10px;
+  margin: 5px 0;
+}
+
+.horario-time {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
+  color: #333333;
+}
+
+.horario-date {
+  font-size: 14px;
+  color: #666666;
+  margin: 5px 0 0;
+}
+
+/* Estilos para la tarjeta de horario */
+#horario-card {
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 10px;
+  padding: 15px;
+  background-color: #ffffff;
+}
+
+#horario-card-header {
+  background-color: #f5f5f5;
+  border-bottom: 2px solid #e0e0e0;
+  border-radius: 8px 8px 0 0;
+}
+
+#horario-card-title {
+  color: #333333;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+#horario-card-content {
+  color: #666666;
+  font-size: 16px;
+}
+
+#horario-card-content p {
+  margin: 5px 0;
+}
+
+/* Estilo para las etiquetas de los campos */
+#tipo-corte-label,
+#alergias-label,
+#preferencia-productos-label {
+  font-weight: bold;
+}
+
+/* Estilo para los campos de entrada */
+#tipo-corte-input,
+#alergias-input,
+#preferencia-productos-input {
+  border-radius: 8px; /* Bordes redondeados para un estilo más agradable */
+}
+
+.estado-circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: inline-block;
+}

@@ -1,0 +1,33 @@
+mat-form-field.mat-form-field {
+    font-size: 16px;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.shipping-card {
+    margin: 0 auto;
+    max-width: 80%;
+    justify-content: center;
+    align-items: center;
+}
+
+.mat-radio-button {
+    display: block;
+    margin: 5px 0;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.col {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.col:last-child {
+    margin-right: 0;
+}

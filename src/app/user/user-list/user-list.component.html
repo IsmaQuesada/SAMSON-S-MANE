@@ -1,0 +1,68 @@
+<mat-card class="full-width">
+    <!-- Titulo del Card -->
+    <mat-card-header>
+        <mat-card-title>Usuarios</mat-card-title>
+        <mat-card-subtitle>
+            <a mat-mini-fab matTooltip="Crear usuario" aria-label="Crear usuario" color="primary"
+                (click)="crearUsuario()">
+                <mat-icon>add</mat-icon>
+            </a>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <br>
+
+    <mat-card-content>
+        <hr />
+        <!-- Table -->
+        <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" class="full-width-table" matSort matSortStart="desc"
+                aria-label="Elements">
+                <!-- Columna nombre -->
+                <ng-container matColumnDef="nombre">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
+                    <td mat-cell *matCellDef="let row">{{ row.nombre }}</td>
+                </ng-container>
+
+                <!-- Columna precio -->
+                <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>E-mail</th>
+                    <td mat-cell *matCellDef="let row">{{ row.email }}</td>
+                </ng-container>
+
+                <!-- Columna precio -->
+                <ng-container matColumnDef="telefono">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Teléfono</th>
+                    <td mat-cell *matCellDef="let row">{{ row.telefono }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="rol">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Rol</th>
+                    <td mat-cell *matCellDef="let row">{{ row.role }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="acciones">
+                    <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                    <td mat-cell *matCellDef="let row">
+                        @if (row.role !== 'ADMIN') {
+                        <button mat-mini-fab matTooltip="Actualizar usuario" aria-label="Actualizar usuario"
+                            color="primary" (click)="actualizarUsuario(row.id)">
+                            <mat-icon class="mat-18">edit</mat-icon>
+                        </button>
+                        }
+                        <button mat-mini-fab matTooltip="Detalle usuario" aria-label="Detalle usuario" color="primary"
+                            (click)="detalle(row.id)">
+                            <mat-icon class="mat-18">info</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+
+            <mat-paginator #paginator [length]="dataSource?.data?.length" [pageIndex]="0" [pageSize]="5"
+                [pageSizeOptions]="[3, 5, 10]" aria-label="Seleccione una pagina">
+            </mat-paginator>
+        </div>
+    </mat-card-content>
+</mat-card>
